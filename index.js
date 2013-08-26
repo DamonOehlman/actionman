@@ -2,10 +2,6 @@
 /* global document: false */
 'use strict';
 
-var eve = require('eve');
-var reDelim = /[\.\/]/;
-var reTrailingDelim = /[\.\/]$/;
-
 /**
   # actionman
 
@@ -45,53 +41,73 @@ var reTrailingDelim = /[\.\/]$/;
   defined on the `data-action` attribute.
 
 **/
-module.exports = function(namespace, opts) {
-  var eventTypes = [].concat((opts || {}).types || ['click']);
-  var useDataset = typeof document.dataset != 'undefined';
-  var handlers = [];
-  var scope = (opts || {}).scope || document;
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['eve'], factory);
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like enviroments that support module.exports,
+    // like Node.
+    module.exports = factory(require('eve'));
+  } else {
+    // Browser globals (root is window)
+    root.returnExports = factory(root.eve);
+  }
+}(this, function (eve) {
+  var reDelim = /[\.\/]/;
+  var reTrailingDelim = /[\.\/]$/;
 
-  // convert the namespace to a namespace array
-  namespace = (namespace || '').replace(reTrailingDelim, '');
+  var actionman = function(namespace, opts) {
+    var eventTypes = [].concat((opts || {}).types || ['click']);
+    var useDataset = typeof document.dataset != 'undefined';
+    var handlers = [];
+    var scope = (opts || {}).scope || document;
 
-  // split if the namespace is not empty, otherwise set to an empty array
-  namespace = namespace ? namespace.split(reDelim) : [];
+    // convert the namespace to a namespace array
+    namespace = (namespace || '').replace(reTrailingDelim, '');
 
-  function bind() {
-    // iterate through the event types and bind handlers
-    eventTypes.forEach(function(type, index) {
-      // bind a document level listener
-      scope.addEventListener(type, handlers[index] = function(evt) {
-        // get the action from the event target
-        var action = useDataset ?
-          evt.target.dataset.action :
-          evt.target.getAttribute('data-action');
+    // split if the namespace is not empty, otherwise set to an empty array
+    namespace = namespace ? namespace.split(reDelim) : [];
 
-        // if we don't have an action, bail
-        if (! action) {
-          return;
-        }
+    function bind() {
+      // iterate through the event types and bind handlers
+      eventTypes.forEach(function(type, index) {
+        // bind a document level listener
+        scope.addEventListener(type, handlers[index] = function(evt) {
+          // get the action from the event target
+          var action = useDataset ?
+            evt.target.dataset.action :
+            evt.target.getAttribute('data-action');
 
-        // namespace and event type the action
-        action = namespace.concat(action, type);
+          // if we don't have an action, bail
+          if (! action) {
+            return;
+          }
 
-        // trigger the action passing on the original event
-        eve(action.join('.'), evt.target, evt, type);
+          // namespace and event type the action
+          action = namespace.concat(action, type);
+
+          // trigger the action passing on the original event
+          eve(action.join('.'), evt.target, evt, type);
+        });
+      }, (opts || {}).capture);
+    }
+
+    function unbind() {
+      eventTypes.forEach(function(type, index) {
+        scope.removeEventListener(type, handlers[index]);
       });
-    }, (opts || {}).capture);
-  }
+    }
 
-  function unbind() {
-    eventTypes.forEach(function(type, index) {
-      scope.removeEventListener(type, handlers[index]);
-    });
-  }
+    // bind automatically
+    bind();
 
-  // bind automatically
-  bind();
-
-  return {
-    bind: bind,
-    unbind: unbind
+    return {
+      bind: bind,
+      unbind: unbind
+    };
   };
-};
+
+  return actionman;
+}));
