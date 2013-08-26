@@ -22,6 +22,6 @@
     "url": "https://github.com/DamonOehlman/actionman/issues"
   },
   "dependencies": {
-    "eve": "~0.3.5"
+    "eve": "~0.4.1"
   }
 }
