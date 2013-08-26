@@ -52,7 +52,7 @@
     module.exports = factory(require('eve'));
   } else {
     // Browser globals (root is window)
-    root.returnExports = factory(root.eve);
+    root.actionman = factory(root.eve);
   }
 }(this, function (eve) {
   var reDelim = /[\.\/]/;
