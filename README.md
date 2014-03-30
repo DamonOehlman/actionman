@@ -7,7 +7,7 @@ dom events into eve.
 
 [![NPM](https://nodei.co/npm/actionman.png)](https://nodei.co/npm/actionman/)
 
-[![unstable](http://hughsk.github.io/stability-badges/dist/unstable.svg)](http://github.com/hughsk/stability-badges)
+![unstable](https://img.shields.io/badge/stability-unstable-yellowgreen.svg)
 
 ## Usage
 
@@ -65,7 +65,7 @@ defined on the `data-action` attribute.
 
 ### MIT
 
-Copyright (c) 2013 Damon Oehlman <damon.oehlman@gmail.com>
+Copyright (c) 2014 Damon Oehlman <damon.oehlman@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
