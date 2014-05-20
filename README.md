@@ -7,7 +7,7 @@ dom events into eve.
 
 [![NPM](https://nodei.co/npm/actionman.png)](https://nodei.co/npm/actionman/)
 
-![unstable](https://img.shields.io/badge/stability-unstable-yellowgreen.svg)
+[![unstable](https://img.shields.io/badge/stability-unstable-yellowgreen.svg)](https://github.com/badges/stability-badges) [![Dependency Status](https://david-dm.org/DamonOehlman/actionman.svg)](https://david-dm.org/DamonOehlman/actionman) 
 
 ## Usage
 
