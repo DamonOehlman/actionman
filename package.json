@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/DamonOehlman/actionman.git"
+    "url": "https://github.com/DamonOehlman/actionman.git"
   },
   "keywords": [
     "dom",
@@ -19,7 +19,7 @@
   "author": "Damon Oehlman <damon.oehlman@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://bitbucket.org/DamonOehlman/actionman/issues"
+    "url": "https://github.com/DamonOehlman/actionman/issues"
   },
   "dependencies": {
     "eve": "~0.4.1"
